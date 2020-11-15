@@ -1,0 +1,282 @@
+##
+##COLORS
+##
+
+[colors]
+background = #CC0c1519
+background-alt = #666
+foreground = ${xrdb:color6:#ffffff}
+;foreground = ${xrdb:foreground:#ffffff}
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+##
+##BAR
+##
+
+
+[bar/main]
+
+locale = de_DE.UTF-8
+width = 100%
+height = 24
+radius = 0
+fixed-center = true
+override-redirect = true
+wm-restack = bspwm
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 1
+padding-right = 1
+
+module-margin-left = 0
+module-margin-right = 1
+
+font-0 = Inconsolata:size=11;1
+font-1 = unifont:fontformat=truetype:size=11;0antialias=true
+font-2 = FontAwesome:style=Regular:pixelsize=10;2
+font-3 = Siji:style=Regular:pixelsize=11;1
+
+modules-left = powermenu date bspwm mpd polycrawl
+modules-center = xwindow
+modules-right = pulseaudio xbacklight filesystem battery memory cpu-info updates-arch-combined
+
+tray-position = right
+tray-padding = 0
+tray-maxsize = 12
+tray-offset-x = 0
+tray-offset-y = 0
+tray-scale = 1.0
+
+##
+##MODULES
+##
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %mountpoint%%{F-}:%percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %name%
+label-focused-background = ${colors.background-alt}
+label-focused-underline= ${xrdb:color9:#222}
+label-focused-padding = 2
+
+label-occupied = %name%
+label-occupied-padding = 2
+
+label-urgent = %name%!
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+label-empty = %name%
+label-empty-foreground = ${colors.foreground-alt}
+
+label-empty-padding = 2
+
+; Separator in between workspaces
+; label-separator = |
+
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label> <bar> 
+label = 
+;ramp-0 = 
+;ramp-1 = 
+
+bar-width = 6
+bar-empty-foreground = ${colors.background}
+bar-indicator = |
+bar-indicator-font = 1
+bar-indicator-foreground = ${colors.foreground}
+bar-fill = |
+bar-fill-font = 1
+bar-empty = |
+bar-empty-font = 1
+
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+label = %percentage:2%%
+
+
+[module/memory]
+type = internal/memory
+interval = 2
+label = %percentage_used%%
+
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = " %d-%m-%y"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+label = %date% %time%
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+;sink = alsa_output.pci-0000_00_1b.0.analog-stereo
+sink = bluez_sink.E8_0A_BF_47_43_70.a2dp_sink
+use-ui-max = false
+
+format-volume = <label-volume> <bar-volume>
+label-volume = 
+label-volume-foreground = ${root.foreground}
+
+label-muted = muted
+label-muted-foreground = ${xrdb:color0:#666}
+
+
+bar-volume-width = 6
+bar-volume-empty-foreground = ${colors.background}
+bar-volume-gradient = true
+bar-volume-indicator = |
+bar-volume-indicator-font = 1
+bar-volume-indicator-foreground = ${colors.foreground}
+bar-volume-fill = |
+bar-volume-fill-font = 1
+bar-volume-empty = |
+bar-volume-empty-font = 1
+
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = DADP1
+full-at = 98
+
+format-charging = <label-charging>
+format-charging-prefix = 
+label-charging = ${self.label-discharging}
+
+format-discharging = <ramp-capacity> <label-discharging>
+label-discharging = %percentage%%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = ${colors.foreground}
+ramp-capacity-1-foreground = #f99000
+ramp-capacity-0-foreground = #f90000
+
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.secondary}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-foreground = ${colors.foreground}
+
+
+[module/powermenu]
+type = custom/menu
+label-active-font = 1
+format-spacing = 1
+label-open =  
+label-open-foreground = ${xrdb:color2}
+label-close = 
+label-close-foreground = ${colors.foreground}
+label-separator = |
+label-separator-foreground = ${colors.foreground}
+
+menu-0-0 = reboot
+menu-0-0-foreground = ${colors.foreground}
+menu-0-0-exec = reboot
+menu-0-1 = power off
+menu-0-1-foreground = ${colors.foreground}
+menu-0-1-exec = poweroff
+
+
+[module/mpd]
+type = internal/mpd
+format-online = <icon-prev> <icon-stop> <toggle> <icon-next> <label-time>
+
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+icon-random = 
+icon-repeat = 
+
+
+##
+##CUSTOM SCRIPTS
+##
+
+
+[module/polycrawl]
+type = custom/script
+exec = ~/scripts/polybar/polycrawl
+tail = true
+interval = 0
+
+
+[module/memory-info]
+type = custom/script
+exec = ~/scripts/polybar/memory.sh
+click-left = ~/scripts/polybar/memory.sh --popup
+format-underline = ${colors.primary}
+
+
+[module/cpu-info]
+type = custom/script
+exec = ~/scripts/polybar/cpu.sh
+click-left = ~/scripts/polybar/cpu.sh --popup
+interval =3
+
+
+[module/updates-arch-combined]
+type = custom/script
+exec = ~/scripts/polybar/polybar-pacman-updates
+interval = 360
