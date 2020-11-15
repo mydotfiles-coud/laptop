@@ -1,0 +1,33 @@
+#!/bin/bash
+# Bash Menu Script Example
+
+read -p 'Please enter the Youtube Link: ' linkvar
+
+PS3='Please enter your choice: '
+options=("Download Best Video Quality" "Extract Best Audio Quality" "Extract m4a Audio" "Extract Audio and convert to MP3" "Quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "Download Best Video Quality")
+            youtube-dl --playlist-reverse -o "~/videos/Youtube-dl/%(playlist_index)s - %(title)s.%(ext)s" $linkvar
+		break
+            ;;
+	   "Extract Best Audio Quality")
+            youtube-dl -f bestaudio --playlist-reverse -o "~/musik/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s" $linkvar
+		break
+            ;;
+        "Extract m4a Audio")
+        youtube-dl -x -f m4a --playlist-reverse -o "~/musik/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s" $linkvar
+        break    
+            ;;
+        "Extract Audio and convert to MP3")
+	    read -p 'Mp3 Quality lvl: 0-9 (0 is highest) ' qualvar
+            youtube-dl -f bestaudio --playlist-reverse -o "~/musik/%(uploader)s/%(playlist_index)s - %(title)s.%(ext)s" --exec "ffmpeg -i {} -codec:a libmp3lame -qscale:a $qualvar {}.mp3 && rm {} " $linkvar
+		break
+            ;;
+        "Quit")
+        break
+            ;;
+        *) echo "invalid option $REPLY";;
+    esac
+done

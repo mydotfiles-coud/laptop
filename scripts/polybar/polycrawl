@@ -1,0 +1,5 @@
+#!/bin/sh
+zscroll -l 10 -u true -b "mpd off" -d 0.3 -M "mpc status" -m "playing" \
+		"-b ' '" -m "paused" "-b ' ' -s false" "mpc current" &
+
+wait
