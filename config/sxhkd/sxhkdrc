@@ -168,7 +168,7 @@ super + shift {x}
 
 #ncmpcpp
 super + shift {m}
-	exec urxvtc -e ncmpcpp -c ~/.config/ncmpcpp/config
+	exec	urxvt -name ncmpcpp -e ncmpcpp -c ~/.config/ncmpcpp/config
 
 #ranger
 super + shift {r}
