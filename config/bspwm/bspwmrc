@@ -55,6 +55,7 @@ bspc rule -a JDownloader desktop=^2 follow=on focus=on
 bspc rule -a smplayer desktop=^1 follow=on focus=on
 bspc rule -a mpv desktop=^1 follow=on focus=on
 bspc rule -a vlc desktop=^1 follow=on focus=on
+bspc rule -a URxvt:ncmpcpp desktop=^3 follow=on focus= on
 ## workspace 4 
 bspc rule -a Subl3 desktop=^4 follow=on focus=on
 ## workspace 5 
